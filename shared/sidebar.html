@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 250px; height: 100vh;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+          <span class="fs-4">Floristería</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="/floristeria/dashboard/index.html" class="nav-link active" aria-current="page">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/floristeria/products/index.html" class="nav-link link-dark">
+              Productos
+            </a>
+          </li>
+          <li>
+            <a href="/floristeria/orders/index.html" class="nav-link link-dark">
+              Pedidos
+            </a>
+          </li>
+          <li>
+            <a href="/floristeria/customers/index.html" class="nav-link link-dark">
+              Clientes
+            </a>
+          </li>
+          <li>
+            <a href="/floristeria/settings/index.html" class="nav-link link-dark">
+              Configuración
+            </a>
+          </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://via.placeholder.com/32" alt="user" width="32" height="32" class="rounded-circle me-2">
+            <strong>Usuario</strong>
+          </a>
+          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
+            <li><a class="dropdown-item" href="/profile/index.html">Perfil</a></li>
+            <li><a class="dropdown-item" href="/settings/index.html">Configuración</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" id="logoutButton">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </div>
+</body>
+<script src="sidebar.js"></script>
+</html>

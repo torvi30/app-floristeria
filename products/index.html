@@ -7,11 +7,22 @@
     <title>Products </title>
 </head>
 <body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
     <div class="max-w-6xl mx-auto py-10">
         <div id="cards-container" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
 
     <script>
+        // Load the sidebar
+        fetch("../shared/sidebar.html")
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("sidebar-container").innerHTML = html;
+            })
+            .catch(error => console.error("Error cargando el navbar:", error));
+
         const container = document.getElementById("cards-container");
 
         fetch("http://127.0.0.1:8000/api/products/")

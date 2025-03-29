@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const productTableBody = document.getElementById("productTableBody");
 
+  // Load the sidebar
+  fetch("../shared/sidebar.html")
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById("sidebar-container").innerHTML = html;
+    })
+    .catch(error => console.error("Error cargando el navbar:", error));
+
   // Fetch and populate product data
   function fetchAndPopulateProducts() {
     productTableBody.innerHTML = ""; // Clear the table body
