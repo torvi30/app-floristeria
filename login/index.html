@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>login &amp; signup form with html css &amp; javascript</title>
+  <title>Formulario de inicio de sesión y registro con HTML, CSS y JavaScript</title>
   <link rel="stylesheet" href="./style.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -10,44 +10,45 @@
 <!-- partial:index.partial.html -->
 <div class="wrapper">
       <div class="title-text">
-        <div class="title login">Login Form</div>
-        <div class="title signup">Signup Form</div>
+        <div class="title login">Formulario de Inicio de Sesión</div>
+        <div class="title signup">Formulario de Registro</div>
       </div>
       <div class="form-container">
         <div class="slide-controls">
           <input type="radio" name="slide" id="login" checked>
           <input type="radio" name="slide" id="signup">
-          <label for="login" class="slide login">Login</label>
-          <label for="signup" class="slide signup">Signup</label>
+          <label for="login" class="slide login">Iniciar Sesión</label>
+          <label for="signup" class="slide signup">Registrarse</label>
           <div class="slider-tab"></div>
         </div>
         <div class="form-inner">
           <form action="#" class="login"  onsubmit="handleLogin(event)">
             <div class="field">
-              <input type="text" id="login-username" placeholder="Username" required>
+              <input type="text" id="login-username" placeholder="Usuario" required>
             </div>
             <div class="field">
-              <input type="password" id="login-password" placeholder="Password" required>
+              <input type="password" id="login-password" placeholder="Contraseña" required>
             </div>
             <div class="field btn">
               <div class="btn-layer"></div>
-              <input type="submit" value="Login">
+              <input type="submit" value="Iniciar Sesión">
             </div>
-            <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+            <div class="signup-link">¿No eres miembro? <a href="">Regístrate ahora</a></div>
+            <div class="signup-link">Página principal <a href="/floristeria/">Página de inicio</a></div>
           </form>
           <form action="#" class="signup" onsubmit="handleSignup(event)">
             <div class="field">
-              <input type="text" id="signup-username" placeholder="Username" required>
+              <input type="text" id="signup-username" placeholder="Usuario" required>
             </div>
             <div class="field">
-              <input type="password" id="signup-password" placeholder="Password" required>
+              <input type="password" id="signup-password" placeholder="Contraseña" required>
             </div>
             <div class="field">
-              <input type="password" id="signup-confirm-password" placeholder="Confirm password" required>
+              <input type="password" id="signup-confirm-password" placeholder="Confirmar contraseña" required>
             </div>
             <div class="field btn">
               <div class="btn-layer"></div>
-              <input type="submit" value="Signup">
+              <input type="submit" value="Registrarse">
             </div>
           </form>
         </div>

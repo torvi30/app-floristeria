@@ -12,7 +12,12 @@
 
     <div class="max-w-6xl mx-auto py-10">
         <h1 class="text-3xl font-bold mb-6">Productos</h1>
-        <div id="cards-container" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar por tipo" class="border p-2 rounded">
+            <button id="search-button" class="px-4 py-2 bg-green-500 text-white rounded">Buscar</button>
+            <button id="clear-button" class="px-4 py-2 bg-gray-500 text-white rounded">Limpiar</button>
+        </div>
+        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
     </div>
     <script src="../shared/sidebar.js"></script>
     <script src="script.js"></script>
