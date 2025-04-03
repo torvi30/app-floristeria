@@ -1,12 +1,20 @@
+function loginOrLogout() {
+  localStorage.removeItem("authToken");
+  window.location.href = "../login/index.html";
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutButton = document.getElementById("logoutButton");
-  console.log("Logout button:", logoutButton);
-  if (logoutButton) {
-    console.log("Logout button found");
-    logoutButton.addEventListener("click", () => {
-      localStorage.removeItem("authToken");
-      window.location.href = "/login/index.html";
-    });
+function monitorAuthToken() {
+  window.addEventListener("storage", (event) => {
+    if (event.key === "authToken" && !event.newValue) {
+      window.location.href = "../login/index.html";
+    }
+  });
+
+  // Initial check in case the token is already missing
+  if (!localStorage.getItem("authToken")) {
+    window.location.href = "../login/index.html";
   }
-});
+}
+
+// Call the function to start monitoring
+monitorAuthToken();
