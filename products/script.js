@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartTotal = document.getElementById("cart-total");
   const openCartButton = document.getElementById("open-cart-button");
   const closeCartButton = document.getElementById("close-cart-button");
+  const checkoutButton = document.getElementById("checkout-button");
 
   // Function to close the cart
   closeCartButton.addEventListener("click", () => {
@@ -164,6 +165,60 @@ document.addEventListener("DOMContentLoaded", () => {
   clearButton.addEventListener("click", () => {
     searchInput.value = "";
     fetchAndDisplayProducts();
+  });
+
+  checkoutButton.addEventListener("click", () => {
+    if (cart.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Carrito vacío",
+        text: "No hay productos en el carrito para finalizar la compra.",
+      });
+      return;
+    }
+
+    // Generar los detalles de la compra
+    const cartDetails = cart
+      .map(
+        (item) =>
+          `<li>${item.name} - ${item.quantity} x $${item.price.toFixed(2)} = $${(
+            item.quantity * item.price
+          ).toFixed(2)}</li>`
+      )
+      .join("");
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    // Mostrar el SweetAlert con los detalles
+    Swal.fire({
+      title: "Detalles de la compra",
+      html: `
+        <ul style="text-align: left; list-style: none; padding: 0;">
+          ${cartDetails}
+        </ul>
+        <p><strong>Total: $${total.toFixed(2)}</strong></p>
+      `,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar Pedido",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "Pedido confirmado",
+          text: "¡Gracias por tu compra!",
+        });
+        cart.length = 0; // Vaciar el carrito
+        updateCart(); // Actualizar la vista del carrito
+      } else if (result.isDismissed) {
+        Swal.fire({
+          icon: "info",
+          title: "Pedido cancelado",
+          text: "Tu carrito sigue intacto.",
+        });
+      }
+    });
   });
 
   // Initial fetch
