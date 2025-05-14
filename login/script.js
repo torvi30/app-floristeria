@@ -25,14 +25,14 @@ function validatePasswordMatch(password, confirmPassword) {
 }
 
 // Función para registrar un usuario en la base de datos
-async function registerUser(username, password) {
+async function registerUser(email, username, password ) {
   try {
     const response = await fetch("http://127.0.0.1:8000/api/register/", {
       method: "POST",
-      headers: {
+      headers: { 
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, username, password }),
     });
 
     if (response.ok) {
@@ -84,23 +84,26 @@ function checkAuthentication() {
 // Manejar el evento de registro
 function handleSignup(event) {
   event.preventDefault();
-  const username = document.getElementById("signup-username").value;
-  const password = document.getElementById("signup-password").value;
-  const confirmPassword = document.getElementById("signup-confirm-password").value;
 
-  if (!validatePasswordMatch(password, confirmPassword)) {
-    Swal.fire("Error", "Las contraseñas no coinciden.", "error");
+  const username = document.getElementById('signup-username').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+  if (password !== confirmPassword) {
+    Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
     return;
   }
 
   // Llamar a la función para registrar el usuario
-  registerUser(username, password);
+  registerUser(email, username, password);
 }
 
 // Manejar el evento de inicio de sesión
 function cleanValues() {
   document.getElementById("signup-username").value = "";
   document.getElementById("signup-password").value = "";
+  document.getElementById("signup-email").value = "";
   document.getElementById("signup-confirm-password").value = "";
 }
 

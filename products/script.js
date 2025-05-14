@@ -204,6 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        cartContainer.classList.add("hidden");
+        openCartButton.classList.remove("hidden");
         Swal.fire({
           icon: "success",
           title: "Pedido confirmado",
