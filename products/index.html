@@ -29,13 +29,21 @@
             <h2 class="text-2xl font-bold">Carrito de Compras</h2>
             <button id="close-cart-button" class="text-red-500 font-bold text-lg">
                 <i class="material-icons">close</i>
-
             </button>
         </div>
         <ul id="cart-items" class="space-y-4"></ul>
         <div class="mt-4">
             <p id="cart-total" class="text-lg font-bold">Total: $0</p>
-            <button id="checkout-button" class="px-4 py-2 bg-blue-500 text-white rounded">Finalizar Compra</button>
+            <!-- Campos para nombre y teléfono del cliente -->
+            <div class="mt-4">
+                <label for="customer-name" class="block text-sm font-medium">Nombre del Cliente</label>
+                <input type="text" id="customer-name" placeholder="Ingresa tu nombre" class="border p-2 rounded w-full">
+            </div>
+            <div class="mt-4">
+                <label for="customer-phone" class="block text-sm font-medium">Teléfono del Cliente</label>
+                <input type="text" id="customer-phone" placeholder="Ingresa tu teléfono" class="border p-2 rounded w-full">
+            </div>
+            <button id="checkout-button" class="px-4 py-2 bg-blue-500 text-white rounded mt-4">Finalizar Compra</button>
         </div>
     </div>
 

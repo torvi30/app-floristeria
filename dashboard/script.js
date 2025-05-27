@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
           row.innerHTML += `<td>${product.type}</td>`;
           row.innerHTML += `<td>${product.name}</td>`;
           row.innerHTML += `<td>${product.description}</td>`;
-          row.innerHTML += `<td>${product.price}</td>`;
+          row.innerHTML += `<td>${product.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}</td>`;
           row.innerHTML += `<td>${product.stock}</td>`;
           row.innerHTML += `<td>${product.is_active ? "Sí" : "No"}</td>`;
           // Edit button

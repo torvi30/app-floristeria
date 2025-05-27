@@ -12,13 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchButton = document.getElementById("search-button");
   const clearButton = document.getElementById("clear-button");
 
-  const cart = [];
   const cartContainer = document.getElementById("cart-container");
   const cartItems = document.getElementById("cart-items");
   const cartTotal = document.getElementById("cart-total");
   const openCartButton = document.getElementById("open-cart-button");
   const closeCartButton = document.getElementById("close-cart-button");
   const checkoutButton = document.getElementById("checkout-button");
+  const customerNameInput = document.getElementById("customer-name");
+  const customerPhoneInput = document.getElementById("customer-phone");
+
+  let cart = []; // Array para almacenar los productos en el carrito
 
   // Function to close the cart
   closeCartButton.addEventListener("click", () => {
@@ -32,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     openCartButton.classList.add("hidden");
   });
 
+  // Función para actualizar el carrito
   function updateCart() {
     cartItems.innerHTML = ""; // Clear the cart display
     let total = 0;
@@ -45,7 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <div>
             <p class="font-bold">${item.name}</p>
             <p class="text-sm text-gray-600">${item.type}</p>
-            <p class="text-sm text-gray-600">$${item.price}</p>
+            <p class="text-sm text-gray-600">
+            ${item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+            </p>
             <div class="flex items-center mt-2">
               <button class="decrease-quantity text-gray-500 px-2" data-index="${index}">-</button>
               <span class="quantity text-gray-700 mx-2">${item.quantity}</span>
@@ -59,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       total += item.price * item.quantity;
     });
 
-    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+    cartTotal.textContent = `Total: ${total.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}`;
 
     // Add event listeners to "Eliminar" buttons
     const deleteButtons = cartItems.querySelectorAll(".delete-item");
@@ -140,7 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="bg-cover bg-center h-56 p-4" style="background-image: url(${property.image})"></div>
             <div class="p-4">
               <p class="uppercase tracking-wide text-sm font-bold text-gray-700">${property.type}</p>
-              <p class="text-3xl text-gray-900">$${property.price}</p>
+              <p class="text-3xl text-gray-900">
+                ${property.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+              </p>
               <p class="font-bold text-gray-700">${property.name}</p>
               <p class="text-gray-700">${property.description}</p>
             </div>
@@ -167,7 +175,11 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchAndDisplayProducts();
   });
 
+  // Función para finalizar la compra
   checkoutButton.addEventListener("click", () => {
+    const customerName = customerNameInput.value.trim() || "customer_name"; // Valor predeterminado si está vacío
+    const customerPhone = customerPhoneInput.value.trim() || "customer_phone"; // Valor predeterminado si está vacío
+
     if (cart.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -177,50 +189,55 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Generar los detalles de la compra
-    const cartDetails = cart
-      .map(
-        (item) =>
-          `<li>${item.name} - ${item.quantity} x $${item.price.toFixed(2)} = $${(
-            item.quantity * item.price
-          ).toFixed(2)}</li>`
-      )
-      .join("");
+    const cartDetails = cart.map(item => ({
+      product_id: item.id,
+      quantity: item.quantity,
+      unit_price: parseFloat(item.price.toFixed(2)),
+      subtotal: parseFloat((item.quantity * item.price).toFixed(2)),
+    }));
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // Mostrar el SweetAlert con los detalles
-    Swal.fire({
-      title: "Detalles de la compra",
-      html: `
-        <ul style="text-align: left; list-style: none; padding: 0;">
-          ${cartDetails}
-        </ul>
-        <p><strong>Total: $${total.toFixed(2)}</strong></p>
-      `,
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonText: "Confirmar Pedido",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        cartContainer.classList.add("hidden");
-        openCartButton.classList.remove("hidden");
+    const order = {
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      total_price: parseFloat(total.toFixed(2)),
+      status: "pending",
+      order_detail: cartDetails,
+    };
+
+    // Enviar el pedido al backend
+    fetch("http://127.0.0.1:8000/api/orders/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then(response => response.json())
+      .then(data => {
         Swal.fire({
           icon: "success",
           title: "Pedido confirmado",
           text: "¡Gracias por tu compra!",
-        });
-        cart.length = 0; // Vaciar el carrito
+        }, onclose => {
+          if (onclose.isConfirmed) {
+            location.reload();
+          }
+        })
+        cart = []; // Vaciar el carrito
         updateCart(); // Actualizar la vista del carrito
-      } else if (result.isDismissed) {
+        customerNameInput.value = ""; 
+        customerPhoneInput.value = "";
+      })
+      .catch(error => {
+        console.error("Error al enviar el pedido:", error);
         Swal.fire({
-          icon: "info",
-          title: "Pedido cancelado",
-          text: "Tu carrito sigue intacto.",
+          icon: "error",
+          title: "Error",
+          text: "Ocurrió un error al procesar tu pedido. Inténtalo nuevamente.",
         });
-      }
-    });
+      });
   });
 
   // Initial fetch
