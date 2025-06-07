@@ -68,22 +68,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para editar una orden
     function editOrder(orderId) {
-        Swal.fire({
-            title: "Editar Orden",
-            text: `¿Deseas editar la orden con ID: ${orderId}?`,
-            icon: "info",
-            showCancelButton: true,
-            confirmButtonText: "Editar",
-            cancelButtonText: "Cancelar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Aquí puedes implementar la lógica para editar la orden
+        // Primero obtenemos los datos actuales de la orden
+        fetch(`http://127.0.0.1:8000/api/orders/${orderId}`)
+            .then(response => response.json())
+            .then(order => {
                 Swal.fire({
-                    icon: "success",
-                    title: "Editar",
-                    text: `Orden con ID ${orderId} lista para editar.`,
-                });
-            }
+                    title: "Editar Orden",
+                    html: `
+                        <input id="swal-customer-name" class="swal2-input" placeholder="Nombre" value="${order.customer_name}">
+                        <input id="swal-customer-phone" class="swal2-input" placeholder="Teléfono" value="${order.customer_phone}">
+                        <select id="swal-status" class="swal2-input">
+                            <option value="pending" ${order.status === "pending" ? "selected" : ""}>Pendiente</option>
+                            <option value="completed" ${order.status === "completed" ? "selected" : ""}>Completada</option>
+                            <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>Cancelada</option>
+                        </select>
+                    `,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Guardar",
+                    cancelButtonText: "Cancelar",
+                    preConfirm: () => {
+                        const customer_name = document.getElementById('swal-customer-name').value.trim();
+                        const customer_phone = document.getElementById('swal-customer-phone').value.trim();
+                        const status = document.getElementById('swal-status').value;
+                        if (!customer_name || !customer_phone) {
+                            Swal.showValidationMessage('Nombre y teléfono son obligatorios');
+                            return false;
+                        }
+                        return { customer_name, customer_phone, status };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Enviar PUT al backend
+                        fetch(`http://127.0.0.1:8000/api/orders/${orderId}`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                customer_name: result.value.customer_name,
+                                customer_phone: result.value.customer_phone,
+                                status: result.value.status,
+                                order_detail: order.order_detail // Se envía igual, no se edita aquí
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Actualizada",
+                                    text: "La orden ha sido actualizada con éxito."
+                            });
+                            fetchOrders();
+                        } else {
+                            console.log("Error updating order:", response.statusText);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "No se pudo actualizar la orden."
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al actualizar la orden."
+                        });
+                    });
+                }
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo cargar la orden para editar."
+            });
         });
     }
 
@@ -91,20 +152,38 @@ document.addEventListener("DOMContentLoaded", () => {
     function printInvoice(orderId) {
         fetch(`http://127.0.0.1:8000/api/orders/${orderId}`)
             .then(response => response.json())
-            .then(order => {
-                const invoiceWindow = window.open("", "Invoice", "width=600,height=400");
+            .then(async order => {
+                // Obtener los nombres de los productos
+                const productNames = {};
+                await Promise.all(order.order_detail.map(async detail => {
+                    try {
+                        const res = await fetch(`http://127.0.0.1:8000/api/products/${detail.product_id}`);
+                        const product = await res.json();
+                        productNames[detail.product_id] = product.name;
+                    } catch {
+                        productNames[detail.product_id] = "Producto desconocido";
+                    }
+                }));
+
+                const invoiceWindow = window.open("", "Invoice", "width=700,height=600");
                 const invoiceContent = `
-                    <h1>Factura</h1>
-                    <p><strong>ID de Orden:</strong> ${order.id}</p>
+                    <div style="text-align: center;">
+                        <img src="../imgicon/logo.png" alt="Logo" style="height: 200px; margin-bottom: 10px;">
+                        <p style="margin: 0;">Calle 28 # 28-20, Marinilla, Antioquia</p>
+                        <p style="margin: 0;">Teléfono: 123 456 7890</p>
+                        <hr>
+                    </div>
+                    <h2>Factura</h2>
+                    <p><strong>Orden:</strong> ${order.id}</p>
                     <p><strong>Cliente:</strong> ${order.customer_name}</p>
                     <p><strong>Teléfono:</strong> ${order.customer_phone}</p>
                     <p><strong>Estado:</strong> ${order.status}</p>
                     <hr>
-                    <h2>Detalles</h2>
+                    <h3>Detalles</h3>
                     <table border="1" style="width: 100%; border-collapse: collapse;">
                         <thead>
                             <tr>
-                                <th>Producto ID</th>
+                                <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Precio Unitario</th>
                                 <th>Subtotal</th>
@@ -113,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <tbody>
                             ${order.order_detail.map(detail => `
                                 <tr>
-                                    <td>${detail.product_id}</td>
+                                    <td>${productNames[detail.product_id]}</td>
                                     <td>${detail.quantity}</td>
                                     <td>$${detail.unit_price.toFixed(2)}</td>
                                     <td>$${detail.subtotal.toFixed(2)}</td>
@@ -123,7 +202,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     </table>
                     <hr>
                     <p><strong>Total:</strong> $${order.total_price.toFixed(2)}</p>
-                    <p>Gracias por su compra.</p>
+                    <br>
+                    <div style="background: #f9f9f9; padding: 10px; border-radius: 6px;">
+                        <strong>¡Gracias por su compra!</strong>
+                        <p>Esperamos que disfrute nuestros productos. Su satisfacción es nuestra prioridad.</p>
+                    </div>
+                    <br>
+                    <div style="font-size: 0.95em;">
+                        <strong>Condiciones del servicio:</strong>
+                        <ol>
+                            <li>Los productos deben ser revisados al momento de la entrega.</li>
+                            <li>No se aceptan devoluciones después de 24 horas.</li>
+                            <li>Para cualquier reclamo, conserve esta factura.</li>
+                        </ol>
+                    </div>
                 `;
                 invoiceWindow.document.write(invoiceContent);
                 invoiceWindow.document.close();

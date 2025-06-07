@@ -216,15 +216,33 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(response => response.json())
       .then(data => {
+        // Construir el detalle de la compra en HTML
+        const detalleHTML = `
+          <h3>Detalle de tu compra:</h3>
+          <ul style="text-align:left;">
+            ${cart.map(item => `
+              <li>
+                <strong>${item.name}</strong> (${item.quantity} x ${item.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })})
+              </li>
+            `).join("")}
+          </ul>
+          <p><strong>Total:</strong> ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}</p>
+        `;
+
         Swal.fire({
           icon: "success",
           title: "Pedido confirmado",
-          text: "¡Gracias por tu compra!",
-        }, onclose => {
-          if (onclose.isConfirmed) {
+          html: detalleHTML,
+          showCancelButton: true,
+          confirmButtonText: "Confirmar",
+          cancelButtonText: "Cancelar"
+        }).then(result => {
+          if (result.isConfirmed) {
             location.reload();
           }
-        })
+          // Si cancela, no recarga la página
+        });
+
         cart = []; // Vaciar el carrito
         updateCart(); // Actualizar la vista del carrito
         customerNameInput.value = ""; 
@@ -239,6 +257,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
   });
+
+  function validateCustomerFields() {
+    if (customerNameInput.value.trim() && customerPhoneInput.value.trim()) {
+      checkoutButton.disabled = false;
+    } else {
+      checkoutButton.disabled = true;
+    }
+  }
+
+  customerNameInput.addEventListener("input", validateCustomerFields);
+  customerPhoneInput.addEventListener("input", validateCustomerFields);
 
   // Initial fetch
   fetchAndDisplayProducts();
