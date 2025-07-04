@@ -63,7 +63,7 @@ async function loginUser(username, password) {
       // Guardar token o estado de autenticación en localStorage
       localStorage.setItem("authToken", data.token);
       // Redirigir al dashboard
-      window.location.href = "http://127.0.0.1:5500/floristeria/dashboard/index.html?#";
+      window.location.href = "http://127.0.0.1:5501/dashboard/index.html?#";
     } else {
       Swal.fire("Error", "Credenciales incorrectas. Intente nuevamente.", "error");
     }
@@ -77,7 +77,7 @@ function checkAuthentication() {
   const token = localStorage.getItem("authToken");
   if (!token) {
     // Redirigir al login si no está autenticado
-    window.location.href = "http://127.0.0.1:5500/floristeria/login/index.html";
+    window.location.href = "http://127.0.0.1:5501/login/index.html";
   }
 }
 
