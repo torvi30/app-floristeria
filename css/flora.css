@@ -32,6 +32,13 @@ body {
     margin: 0 auto;
 }
 
+iframe {
+        border: none;
+        width: 100vw;
+        height: 60vh;
+        display: block;
+}
+
 .boton {
     background-color: var(--brown);
     color: var(--blanco);
