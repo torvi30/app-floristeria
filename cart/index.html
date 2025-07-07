@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Carrito de compras</title>
+</head>
+
+<body class="bg-gray-10 d-flex">
+    <div class="nav-bg">
+        <nav class="navbar-profesional contenedor">
+            <div class="nav-item" data-type="Ramos">Ramos</div>
+            <div class="nav-item" data-type="Arreglos">Arreglos decorativos</div>
+            <div class="nav-item" data-type="Especiales">Ocasiones especiales</div>
+            <div class="nav-item" data-type="Eventos">Eventos</div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto py-10 flex-1">
+        <h1 class="text-3xl font-bold mb-6">Productos</h1>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar por tipo" class="border p-2 rounded">
+            <button id="search-button" class="px-4 py-2 bg-green-500 text-white rounded">Buscar</button>
+            <button id="clear-button" class="px-4 py-2 bg-gray-500 text-white rounded">Limpiar</button>
+        </div>
+        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
+    </div>
+
+    <!-- Shopping Cart -->
+    <div id="cart-container" class="w-1/8 bg-white shadow-lg p-4 fixed right-0 top-0 h-full overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Carrito de Compras</h2>
+            <button id="close-cart-button" class="text-red-500 font-bold text-lg">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+        <ul id="cart-items" class="space-y-4"></ul>
+        <div class="mt-4">
+            <p id="cart-total" class="text-lg font-bold">Total: $0</p>
+            <!-- Campos para nombre y teléfono del cliente -->
+            <div class="mt-4">
+                <label for="customer-name" class="block text-sm font-medium">Nombre</label>
+                <input type="text" id="customer-name" placeholder="Ingresa tu nombre" class="border p-2 rounded w-full"
+                    required>
+            </div>
+            <div class="mt-4">
+                <label for="customer-phone" class="block text-sm font-medium">Teléfono</label>
+                <input type="text" id="customer-phone" placeholder="Ingresa tu teléfono"
+                    class="border p-2 rounded w-full" required>
+            </div>
+            <button id="checkout-button" class="px-4 py-2 bg-blue-500 text-white rounded mt-4" disabled>Finalizar
+                Compra</button>
+        </div>
+    </div>
+
+    <!-- Floating button to reopen the cart -->
+    <button id="open-cart-button"
+        class="hidden fixed right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-2 rounded shadow-lg">
+        <i class="material-icons">shopping_cart</i>
+    </button>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+
+</html>

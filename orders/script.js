@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         </td>
                         <td>
                             <button class="btn btn-secondary btn-sm print-invoice" data-id="${order.id}">Ver</button>
+                            <button class="btn btn-success btn-sm print-direct" data-id="${order.id}" title="Imprimir (Ctrl+*)">
+                                <i class="bi bi-printer"></i> Imprimir
+                            </button>
                         </td>
                     `;
                     ordersTableBody.appendChild(row);
@@ -40,6 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     button.addEventListener("click", (event) => {
                         const orderId = event.target.dataset.id;
                         printInvoice(orderId);
+                    });
+                });
+
+                // Evento para imprimir directamente la factura
+                document.querySelectorAll(".print-direct").forEach(button => {
+                    button.addEventListener("click", (event) => {
+                        const orderId = event.target.dataset.id;
+                        printInvoice(orderId, true); // true para imprimir directo
                     });
                 });
 
@@ -149,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
         // Función para imprimir la factura
-    function printInvoice(orderId) {
+    function printInvoice(orderId, directPrint = false) {
         fetch(`http://127.0.0.1:8000/api/orders/${orderId}`)
             .then(response => response.json())
             .then(async order => {
@@ -219,6 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 invoiceWindow.document.write(invoiceContent);
                 invoiceWindow.document.close();
+
+                // Imprimir automáticamente si es impresión directa
+                if (directPrint) {
+                    invoiceWindow.onload = function() {
+                        invoiceWindow.print();
+                    };
+                }
             })
             .catch(error => console.error("Error fetching order details:", error));
     }
@@ -237,6 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result.isConfirmed) {
                 fetch(`http://127.0.0.1:8000/api/orders/${orderId}`, {
                     method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 })
                     .then(response => {
                         if (response.ok) {
@@ -244,13 +265,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 icon: "success",
                                 title: "Eliminada",
                                 text: "La orden ha sido eliminada con éxito.",
-                            });
-                            fetchOrders(); // Recargar la tabla
+                            });       fetchOrders(); // Recargar la tabla
                         } else {
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: "No se pudo eliminar la orden.",
+                                text: "No se pudo eliminar la orden."
                             });
                         }
                     })
@@ -259,17 +279,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al intentar eliminar la orden.",
+                            text: "Ocurrió un error al intentar eliminar la orden."
                         });
                     });
-            }
-        });
-    }
+                }
+            });
+        }
 
-    // Inicializar la página
     function init() {
-        loadSidebar();
+        // Inicializar la página
         fetchOrders();
+        loadSidebar();
     }
 
     init();

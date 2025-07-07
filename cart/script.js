@@ -270,11 +270,32 @@ document.addEventListener("DOMContentLoaded", () => {
   customerPhoneInput.addEventListener("input", validateCustomerFields);
 
   // Initial fetch
-  fetchAndDisplayProducts();
+  // Leer parámetro de la URL y buscar automáticamente si existe
+  const params = new URLSearchParams(window.location.search);
+  const typeParam = params.get('type');
+  if (typeParam) {
+    searchInput.value = typeParam;
+    fetchAndDisplayProducts(typeParam);
+  } else {
+    fetchAndDisplayProducts();
+  }
 
   document.getElementById('search-input').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         document.getElementById('search-button').click();
     }
+  });
+
+  // Navbar funcionalidad sin recargar la página
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      // Quitar clase activa de todos
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      // Agregar clase activa al seleccionado
+      this.classList.add('active');
+      // Poner el valor en el input y buscar
+      searchInput.value = this.dataset.type;
+      searchButton.click();
+    });
   });
 });
