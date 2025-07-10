@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="flex p-4 border-t border-gray-300 text-gray-700">
               <p class="flex-1"><span class="text-gray-900 font-bold">${property.stock}</span> Stock</p>
-              <button class="add-to-cart-button px-4 py-2 bg-blue-500 text-white text-xs font-bold uppercase rounded" 
+              <button class="add-to-cart-button px-4 py-2 bg-custom-dark-brown text-white text-xs font-bold uppercase rounded" 
                 data-product='${JSON.stringify(property)}'>Agregar Carrito</button>
             </div>
           `;

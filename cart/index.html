@@ -23,12 +23,12 @@
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-6xl mx-auto py-10 flex-1">
+    <div class="main-content max-w-6xl mx-auto py-10 flex-1">
         <h1 class="text-3xl font-bold mb-6">Productos</h1>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Buscar por tipo" class="border p-2 rounded">
-            <button id="search-button" class="px-4 py-2 bg-green-500 text-white rounded">Buscar</button>
-            <button id="clear-button" class="px-4 py-2 bg-gray-500 text-white rounded">Limpiar</button>
+            <button id="search-button" class="px-4 py-2 bg-custom-dark-brown text-white rounded">Buscar</button>
+            <button id="clear-button" class="px-4 py-2 bg-custom-light-brown text-white rounded">Limpiar</button>
         </div>
         <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
     </div>
@@ -55,16 +55,23 @@
                 <input type="text" id="customer-phone" placeholder="Ingresa tu teléfono"
                     class="border p-2 rounded w-full" required>
             </div>
-            <button id="checkout-button" class="px-4 py-2 bg-blue-500 text-white rounded mt-4" disabled>Finalizar
+            <button id="checkout-button" class="px-4 py-2 bg-custom-dark-brown text-white rounded mt-4" disabled>Finalizar
                 Compra</button>
         </div>
     </div>
 
     <!-- Floating button to reopen the cart -->
     <button id="open-cart-button"
-        class="hidden fixed right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-2 rounded shadow-lg">
+        class="hidden fixed right-4 top-1/2 transform -translate-y-1/2 bg-custom-dark-brown text-white px-4 py-2 rounded shadow-lg">
         <i class="material-icons">shopping_cart</i>
     </button>
+
+    <!-- Botón flotante para volver al inicio -->
+    <a href="/" id="home-button"
+        class="fixed left-4 bottom-4 bg-custom-dark-brown hover:bg-custom-dark-brown text-white p-3 rounded-full shadow-lg flex items-center justify-center z-50"
+        title="Volver al inicio">
+        <span class="material-icons" style="font-size: 2rem;">home</span>
+    </a>
 
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>

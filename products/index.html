@@ -17,8 +17,8 @@
         <h1 class="text-3xl font-bold mb-6">Productos</h1>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Buscar por tipo" class="border p-2 rounded">
-            <button id="search-button" class="px-4 py-2 bg-green-500 text-white rounded">Buscar</button>
-            <button id="clear-button" class="px-4 py-2 bg-gray-500 text-white rounded">Limpiar</button>
+            <button id="search-button" class="px-4 py-2 bg-custom-dark-brown text-white rounded">Buscar</button>
+            <button id="clear-button" class="px-4 py-2 bg-custom-light-brown text-white rounded">Limpiar</button>
         </div>
         <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4"></div>
     </div>
@@ -43,12 +43,12 @@
                 <label for="customer-phone" class="block text-sm font-medium">Teléfono del Cliente</label>
                 <input type="text" id="customer-phone" placeholder="Ingresa tu teléfono" class="border p-2 rounded w-full" required>
             </div>
-            <button id="checkout-button" class="px-4 py-2 bg-blue-500 text-white rounded mt-4" disabled>Finalizar Compra</button>
+            <button id="checkout-button" class="px-4 py-2 bg-custom-dark-brown text-white rounded mt-4" disabled>Finalizar Compra</button>
         </div>
     </div>
 
     <!-- Floating button to reopen the cart -->
-    <button id="open-cart-button" class="hidden fixed right-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-2 rounded shadow-lg">
+    <button id="open-cart-button" class="hidden fixed right-4 top-1/2 transform -translate-y-1/2 bg-custom-dark-brown text-white px-4 py-2 rounded shadow-lg">
         <i class="material-icons">shopping_cart</i>
     </button>
 
@@ -56,4 +56,13 @@
     <script src="script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
+<style>
+    .bg-custom-dark-brown {
+        background: #97550a;
+    }
+    .bg-custom-light-brown {
+        background: #deb887;
+    }
+</style>
+
 </html>
