@@ -60,3 +60,23 @@ $animationSpeed: 40s;
 		width: 250px;
 	}
 }
+
+/* Responsive Slider */
+@media (max-width: 600px) {
+    .slider {
+        width: 98vw;
+        height: 60px;
+    }
+    .slide-track {
+        width: calc(150px * 14);
+    }
+    .slide {
+        height: 60px;
+        width: 150px;
+    }
+    body {
+        flex-direction: column;
+        height: auto;
+        padding: 0;
+    }
+}

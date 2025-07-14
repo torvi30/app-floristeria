@@ -185,3 +185,27 @@ form .btn input[type="submit"]{
   font-weight: 500;
   cursor: pointer;
 }
+
+/* Responsive Login */
+@media (max-width: 600px) {
+  .wrapper {
+    max-width: 98vw;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .wrapper .title {
+    font-size: 1.5rem;
+  }
+  .slide-controls .slide {
+    font-size: 1rem;
+    line-height: 38px;
+  }
+  .form-inner form .field {
+    height: 38px;
+    margin-top: 12px;
+  }
+  form .btn {
+    height: 38px;
+    font-size: 1rem;
+  }
+}

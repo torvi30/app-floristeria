@@ -39,3 +39,20 @@
 .bg-custom-light-brown {
     background: #deb887;
 }
+
+/* Responsive Cart Navbar */
+@media (max-width: 600px) {
+    .navbar-profesional {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem 0.5rem;
+    }
+    .nav-item {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
+    #cart-container {
+        margin-top: 32px;
+        padding: 0 0.5rem;
+    }
+}

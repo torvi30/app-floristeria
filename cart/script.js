@@ -216,6 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(response => response.json())
       .then(data => {
+        // Obtener el número de pedido (ajusta el campo según tu backend)
+        const pedidoId = data.id || data.order_number || 1; // Cambia esto si tu backend usa otro campo
+        const pedidoNumero = pedidoId.toString().padStart(6, '0'); // Ejemplo: 000001
+
         // Construir el detalle de la compra en HTML
         const detalleHTML = `
           <h3>Detalle de tu compra:</h3>
@@ -227,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `).join("")}
           </ul>
           <p><strong>Total:</strong> ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}</p>
+          <p><strong>Número de pedido:</strong> ${pedidoNumero}</p>
         `;
 
         Swal.fire({
@@ -238,9 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
           cancelButtonText: "Cancelar"
         }).then(result => {
           if (result.isConfirmed) {
-            location.reload();
+            // Redirigir a WhatsApp con el número de pedido
+            const mensaje = `Hola, mi número de pedido es ${pedidoNumero}`;
+            const telefono = "573225466673";
+            const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+            window.location.href = url;
           }
-          // Si cancela, no recarga la página
+          // Si cancela, no hace nada
         });
 
         cart = []; // Vaciar el carrito
