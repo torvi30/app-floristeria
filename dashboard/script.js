@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch and populate product data
   function fetchAndPopulateProducts() {
     productTableBody.innerHTML = ""; // Clear the table body
-    fetch("http://127.0.0.1:8000/api/products/")
+    fetch("https://api-floristeria.onrender.com/api/products/")
       .then(response => response.json())
       .then(products => {
         products.forEach(product => {
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       is_active: document.getElementById("productIsActive").value === "true",
     };
 
-    fetch("http://127.0.0.1:8000/api/products/", {
+    fetch("https://api-floristeria.onrender.com/api/products/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to handle editing a product
   function handleEditProduct(productId) {
     // Fetch product details
-    fetch(`http://127.0.0.1:8000/api/products/${productId}`)
+    fetch(`https://api-floristeria.onrender.com/api/products/${productId}`)
       .then(response => response.json())
       .then(product => {
         // Populate the edit form with product data
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       is_active: document.getElementById("editProductIsActive").value === "true",
     };
 
-    fetch(`http://127.0.0.1:8000/api/products/${productId}`, {
+    fetch(`https://api-floristeria.onrender.com/api/products/${productId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://127.0.0.1:8000/api/products/${productId}`, {
+        fetch(`https://api-floristeria.onrender.com/api/products/${productId}`, {
           method: "DELETE",
         })
           .then((response) => {

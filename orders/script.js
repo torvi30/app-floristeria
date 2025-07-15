@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Función para obtener las órdenes
     function fetchOrders() {
-        fetch("http://127.0.0.1:8000/api/orders")
+        fetch("https://api-floristeria.onrender.com/api/orders")
             .then(response => response.json())
             .then(orders => {
                 ordersTableBody.innerHTML = ""; // Limpiar la tabla
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Función para editar una orden
     function editOrder(orderId) {
         // Primero obtenemos los datos actuales de la orden
-        fetch(`http://127.0.0.1:8000/api/orders/${orderId}`)
+        fetch(`https://api-floristeria.onrender.com/api/orders/${orderId}`)
             .then(response => response.json())
             .then(order => {
                 Swal.fire({
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Enviar PUT al backend
-                        fetch(`http://127.0.0.1:8000/api/orders/${orderId}`, {
+                        fetch(`https://api-floristeria.onrender.com/api/orders/${orderId}`, {
                             method: "PUT",
                             headers: {
                                 "Content-Type": "application/json"
@@ -161,14 +161,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Función para imprimir la factura
     function printInvoice(orderId, directPrint = false) {
-        fetch(`http://127.0.0.1:8000/api/orders/${orderId}`)
+        fetch(`https://api-floristeria.onrender.com/api/orders/${orderId}`)
             .then(response => response.json())
             .then(async order => {
                 // Obtener los nombres de los productos
                 const productNames = {};
                 await Promise.all(order.order_detail.map(async detail => {
                     try {
-                        const res = await fetch(`http://127.0.0.1:8000/api/products/${detail.product_id}`);
+                        const res = await fetch(`https://api-floristeria.onrender.com/api/products/${detail.product_id}`);
                         const product = await res.json();
                         productNames[detail.product_id] = product.name;
                     } catch {
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cancelButtonText: "Cancelar",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://127.0.0.1:8000/api/orders/${orderId}`, {
+                fetch(`https://api-floristeria.onrender.com/api/orders/${orderId}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"

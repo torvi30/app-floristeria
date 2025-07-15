@@ -27,7 +27,7 @@ function validatePasswordMatch(password, confirmPassword) {
 // Función para registrar un usuario en la base de datos
 async function registerUser(email, username, password ) {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/register/", {
+    const response = await fetch("https://api-floristeria.onrender.com/api/register/", {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ async function registerUser(email, username, password ) {
 // Función para iniciar sesión
 async function loginUser(username, password) {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/login/", {
+    const response = await fetch("https://api-floristeria.onrender.com/api/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

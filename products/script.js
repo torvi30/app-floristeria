@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("cards-container");
     container.innerHTML = ""; // Clear existing products
 
-    const url = type ? `http://127.0.0.1:8000/api/products/?type=${type}` : "http://127.0.0.1:8000/api/products/";
+    const url = type ? `https://api-floristeria.onrender.com/api/products/?type=${type}` : "https://api-floristeria.onrender.com/api/products/";
 
     fetch(url)
       .then(response => response.json())
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Enviar el pedido al backend
-    fetch("http://127.0.0.1:8000/api/orders/", {
+    fetch("https://api-floristeria.onrender.com/api/orders/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
