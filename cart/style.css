@@ -6,6 +6,8 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     align-items: center;
     justify-content: center;
+    width: 100%;
+    overflow-x: auto;
 }
 .nav-item {
     color: #fff;
@@ -43,16 +45,59 @@
 /* Responsive Cart Navbar */
 @media (max-width: 600px) {
     .navbar-profesional {
-        flex-direction: column;
+        flex-direction: row;
         gap: 0.5rem;
         padding: 0.5rem 0.5rem;
     }
     .nav-item {
-        font-size: 1rem;
-        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+    .main-content h1 {
+        font-size: 1.3rem;
     }
     #cart-container {
-        margin-top: 32px;
-        padding: 0 0.5rem;
+        margin-top: 0;
+        padding: 1rem 0.5rem 2rem 0.5rem;
+        width: 100vw;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        max-width: 100vw;
+        border-radius: 0;
+        z-index: 999;
+        box-shadow: 0 0 0 9999px rgba(0,0,0,0.2);
     }
+    #cart-container .flex {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #close-cart-button {
+        font-size: 2rem;
+        padding: 0.5rem 1rem;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        background: transparent;
+        z-index: 1001;
+    }
+    #cart-container h2 {
+        font-size: 1.1rem;
+    }
+    #cart-total, label, input, button {
+        font-size: 0.95rem;
+    }
+}
+#open-cart-button {
+    position: fixed;
+    z-index: 1002;
+}
+#cart-badge {
+    pointer-events: none;
+    min-width: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.2;
 }

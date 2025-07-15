@@ -103,6 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+
+    updateCartBadge();
   }
 
   function addToCart(product) {
@@ -124,8 +126,17 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", () => {
         const product = JSON.parse(button.dataset.product);
         addToCart(product);
-        cartContainer.classList.remove("hidden");
-        openCartButton.classList.add("hidden");
+
+        if (window.innerWidth <= 600) {
+          // Solo mostrar badge en mobile
+          updateCartBadge();
+          cartContainer.classList.add("hidden");
+          openCartButton.classList.remove("hidden");
+        } else {
+          // Abrir carrito en desktop
+          cartContainer.classList.remove("hidden");
+          openCartButton.classList.add("hidden");
+        }
       });
     });
   }
@@ -307,4 +318,15 @@ document.addEventListener("DOMContentLoaded", () => {
       searchButton.click();
     });
   });
+
+  function updateCartBadge() {
+    const badge = document.getElementById("cart-badge");
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (totalItems > 0) {
+      badge.textContent = totalItems;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
 });
