@@ -41,7 +41,10 @@
             </p>
 
 
-            <a class="boton" href="#">CONTACTAR</a>
+            <a class="boton" href="https://wa.me/573225466673?text=¡Hola!%20Quiero%20más%20información%20sobre%20sus%20servicios%20de%20floristería."
+                target="_blank" rel="noopener">
+                CONTACTAR por WhatsApp
+            </a>
 
         </div> <!-- .contenido-hero-->
     </section>
@@ -139,7 +142,7 @@
 
         <section>
             <h2>Deja tu comentario</h2>
-            <form class="formulario">
+            <form class="formulario" id="comentario-form">
                 <fieldset>
                     <legend>Comenta llenando los campos</legend>
                     <div class="contenedor-campos">
@@ -166,10 +169,25 @@
 
 
                     <div class="alinear-derecha flex">
-                        <input class="boton w-sm-100" type="submit" value="enviar">
+                        <input class="boton w-sm-100" type="submit" value="enviar" id="enviar-whatsapp">
                     </div>
                 </fieldset>
             </form>
+            <script>
+                document.getElementById('comentario-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Reemplaza por tu número de WhatsApp
+                    const numero = '573225466673';
+                    const nombre = document.getElementById('nombre').value;
+                    const telefono = document.getElementById('telefono').value;
+                    const correo = document.getElementById('correo').value;
+                    const mensaje = document.getElementById('mensaje').value;
+
+                    const texto = `¡Hola! Quiero dejar mi comentario:\n\nNombre: ${nombre}\nTeléfono: ${telefono}\nCorreo: ${correo}\nComentario: ${mensaje}`;
+                    const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+                    window.open(url, '_blank');
+                });
+            </script>
         </section>
     </main>
     <footer>
