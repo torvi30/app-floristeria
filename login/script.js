@@ -77,7 +77,7 @@ function checkAuthentication() {
   const token = localStorage.getItem("authToken");
   if (!token) {
     // Redirigir al login si no está autenticado
-    window.location.href = "https://app-floristeria.onrender.com/login/index.html";
+    window.location.href = "https://app-floristeria.onrender.com/login";
   }
 }
 
