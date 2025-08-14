@@ -52,6 +52,8 @@ html,body{
   justify-content: space-between;
   border: 1px solid lightgrey;
   border-radius: 15px;
+  background: #b94e4e;
+  color: white;
 }
 .slide-controls .slide{
   height: 100%;
@@ -90,10 +92,10 @@ input[type="radio"]{
   user-select: none;
 }
 #signup:checked ~ label.login{
-  color: #000;
+  color: #730f0f;
 }
 #login:checked ~ label.signup{
-  color: #000;
+  color: #730f0f;
 }
 #login:checked ~ label.login{
   cursor: default;
@@ -147,8 +149,7 @@ form .field input:focus::placeholder{
 }
 .form-inner form .pass-link a,
 .form-inner form .signup-link a{
-  color: #1a75ff;
-  text-decoration: none;
+  color: #730f0f;
 }
 .form-inner form .pass-link a:hover,
 .form-inner form .signup-link a:hover{
