@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
-:root {
-  --gradient-global: -webkit-linear-gradient(left, #beb15b, #d5cfac);
-}
 
 *{
   margin: 0;
