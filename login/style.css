@@ -15,7 +15,7 @@ html,body{
   height: 100%;
   width: 100%;
   place-items: center;
-  background: var(--gradient-global);
+  background: #fff8f0;
 }
 ::selection{
   background: #1a75ff;
@@ -28,6 +28,7 @@ html,body{
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+  border: 1px solid #b94e4e;
 }
 .wrapper .title-text{
   display: flex;
@@ -37,6 +38,7 @@ html,body{
   width: 50%;
   font-size: 35px;
   font-weight: 600;
+  color: #b94e4e;
   text-align: center;
   transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
@@ -176,7 +178,7 @@ form .btn input[type="submit"]{
   width: 100%;
   z-index: 1;
   position: relative;
-  background: none;
+  background: #b94e4e;
   border: none;
   color: #fff;
   padding-left: 0;
